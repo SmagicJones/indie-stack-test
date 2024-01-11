@@ -10,12 +10,21 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 
+import Nav from "./components/Nav";
+import Burger from "./components/Burger";
+import Aside from "./components/Aside";
+
+import Layout from "./components/Layout";
+
 import { getUser } from "~/session.server";
 import stylesheet from "~/tailwind.css";
+import styles from "./styles/style.css";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesheet },
-  ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
+  { rel: "stylesheet", href: styles },
+
+  // ...(cssBundleHref ? [{ rel: "stylesheet", href: cssBundleHref }] : []),
 ];
 
 export const loader = async ({ request }: LoaderFunctionArgs) => {
@@ -32,7 +41,23 @@ export default function App() {
         <Links />
       </head>
       <body className="h-full">
-        <Outlet />
+        {/* <div>
+          <Outlet />
+        </div> */}
+
+        <section className="pt-20">
+          <div className="grid grid-col-1">
+            <div className="bg-slate-500 rounded-xl p-4 m-2">
+              <Nav />
+              <Burger />
+              <Aside />
+              <Layout>
+                <Outlet />
+              </Layout>
+            </div>
+          </div>
+        </section>
+
         <ScrollRestoration />
         <Scripts />
         <LiveReload />
